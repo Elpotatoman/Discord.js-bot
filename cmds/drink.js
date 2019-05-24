@@ -17,6 +17,10 @@ module.exports.run = async (bot, message, args) => {
         })
      });
 
+    if(args.includes("and") && args.includes("fuck"))
+    {
+        message.channel.send("We doing this?", {files: ["./images/Lotus Juice.gif"]});
+    }
 }
 
 module.exports.help = {

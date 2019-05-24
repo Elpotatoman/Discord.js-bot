@@ -1,0 +1,159 @@
+const fs = require("fs");
+var mergeImg = require("merge-img");
+const stats = require(`./fight/fightstats`);
+
+function getWaifu()
+{
+    var myfiles = [];
+        var fileList = fs.readdirSync('./waifu/');
+        fileList.forEach(function (file) {
+            myfiles.push(file);
+        });
+        var img = Math.floor(Math.random() * Math.floor(fileList.length));
+
+        return `./waifu/${fileList[img]}`;
+}
+
+function fight(fighter1, fighter2)
+{
+    if(fighter1.hp/fighter2.str < fighter2.hp/fighter1.str)
+        return 2;
+    else
+        return 1;
+}
+function levelCheck(fighter)
+{
+    return (fighter.exp >= fighter.level*30)
+}
+function generateFighterWin(fighter,fighterOther)
+{
+    var newFighter = 
+    {    
+        user: fighter.user,
+        name: fighter.name,
+        waifu: fighter.waifu,
+        hp: fighter.hp - parseInt(Math.random()*fighterOther.str+1),
+        str: fighter.str,
+        kills: fighter.kills + 1,
+        level: fighter.level,
+        exp: fighter.exp
+
+    };
+    return newFighter;
+}
+function generateFighterLose(fighter)
+{
+    var newFighter =
+    {
+        user: fighter.user,
+        name: fighter.name,
+        waifu: getWaifu(),
+        hp: stats.getHP(),
+        str: stats.getSTR(),
+        kills : 0,
+        level : 0,
+        exp: 0
+    };
+    return newFighter;
+}
+
+module.exports.run = async (bot, message, args) => 
+{
+    fs.readFile('./cmds/fight/fightIndex.json', `utf8`, function (err, data)
+    {
+        if (err)
+        {
+            console.log(err);
+        } 
+    
+        file = JSON.parse(data);
+        
+        var index1 = Math.floor(Math.random() * Math.floor(file.fighters.length));
+        var index2 = Math.floor(Math.random() * Math.floor(file.fighters.length));
+        var fighter1 = file.fighters[index1];
+        var fighter2 = file.fighters[index2];
+        while(index1 === index2)
+        {   index2 = Math.floor(Math.random() * Math.floor(file.fighters.length));
+            fighter2 = file.fighters[index2];
+        }
+
+        var result = fight(fighter1, fighter2);
+        var winner="";
+
+        if(result == 1)
+            winner = fighter1.name;
+        else if(result == 2)
+            winner = fighter2.name;
+
+
+        const embed =  
+        {
+            color: 3447003, 
+            title: `Fight!`,
+            description: 
+            `**${fighter1.name}**:
+            HP:${fighter1.hp} Strength:${fighter1.str} 
+            Kills:${fighter1.kills} 
+            LVL:${fighter1.level} EXP${fighter1.exp}     
+
+            vs.
+
+            **${fighter2.name}**:
+            HP:${fighter2.hp} Strength:${fighter2.str} 
+            Kills:${fighter2.kills} 
+            LVL:${fighter2.level} EXP:${fighter2.exp} 
+            
+            Winner: **${winner}**`,
+
+            file: './output/fight/outFight.png'
+            
+        };
+        
+
+        mergeImg([fighter1.waifu, `./output/fight/vs.png`, fighter2.waifu])
+        .then((img) => {
+            img.write('./output/fight/outFight.png', () => message.channel.send({embed: embed}));
+            })
+            
+        .catch(err => {
+            console.error(err);
+        });
+
+        if(result === 2)
+        {   
+            fighter2.exp = fighter2.exp + fighter1.str;
+            if(levelCheck(fighter2))
+            {
+                fighter2.level = fighter2.level + 1;
+                fighter2.str = fighter2.str + 1;
+            }
+
+            file.fighters[index2] = generateFighterWin(fighter2, fighter1);
+
+            file.fighters[index1] = generateFighterLose(fighter1);
+            
+        }
+        if(result === 1)
+        {
+            fighter1.exp = fighter1.exp + fighter2.str;
+            if(levelCheck(fighter1))
+            {
+                fighter1.level = fighter1.level + 1;
+                fighter1.str = fighter1.str + 1;
+            }
+
+            file.fighters[index1] = generateFighterWin(fighter1, fighter2);
+
+            file.fighters[index2] = generateFighterLose(fighter2);
+        }
+
+        var json = JSON.stringify(file); 
+        fs.writeFileSync('./cmds/fight/fightIndex.json', json);
+    });   
+
+}
+
+module.exports.help = {
+    name: "fightsim",
+    description: "Initiates a fight between two members in the server that have fighters."
+}

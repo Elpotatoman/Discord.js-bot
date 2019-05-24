@@ -1,7 +1,9 @@
 const fs = require("fs");
 const Discord = require("discord.js");
+const sharp = require("sharp");
 
 var mergeImg = require("merge-img");
+
 
 module.exports.run = async (bot, message, args) => {
     
@@ -15,16 +17,43 @@ module.exports.run = async (bot, message, args) => {
     
     
     var image1 = "./waifu/" + fileList[img1].toString();
-    var image2 = "./waifu/" + fileList[img2].toString();
 
-    mergeImg([image1,image2])
+    let promise1 = await sharp(image1)
+        .resize(800,600, { fit: 'inside', withoutEnlargement: true })
+        .toFormat('jpeg')
+        .toBuffer()
+        .then( data => {
+            fs.writeFileSync(`./output/war/out1.jpeg`, data);
+        })
+        .catch( err => {
+            console.log(err);
+        })
+    
+    let result1 = await promise1;
+
+
+    var image2 = "./waifu/" + fileList[img2].toString();
+    let promise = await sharp(image2)
+        .resize(800,600, { fit: 'inside', withoutEnlargement: true })
+        .toFormat('jpeg')
+        .toBuffer()
+        .then( data => {
+            fs.writeFileSync(`./output/war/out2.jpeg`, data);
+        })
+        .catch( err => {
+            console.log(err);
+        });
+
+    let result = await promise;
+
+
+    mergeImg(['./output/war/out1.jpeg','./output/war/out2.jpeg'])
   .then((img) => {
     // Save image as file
     
-    img.write('./output/outWar.png', () => console.log('done'));
+    img.write('./output/outWar.png', () => message.channel.send("Combatants", {files: ['./output/outWar.png']} ));
   });
     
-    await message.channel.send("Combatants", {files: ['./output/outWar.png']} );  
     
     let pollEmbed = new Discord.RichEmbed()
         .setTitle("Waifu Vote")

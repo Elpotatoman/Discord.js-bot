@@ -25,7 +25,6 @@ module.exports.run = async (client, message, args) => {
         var string = "";
         jsfiles.forEach( (f, i) => {
             let props = require(`${__dirname}/${f}`);
-            
             string += props.help.name + "\n-" + props.help.description + "\n\n";
             if(string.length >180)
             {
@@ -37,11 +36,6 @@ module.exports.run = async (client, message, args) => {
         message.channel.send(embed);
 
     })
-    
-
-
-
-     
 
 }
 

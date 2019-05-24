@@ -4,6 +4,7 @@ const client = new Discord.Client();
 const config = require("./config.json");
 const https = require('https');
 
+var fightsim = require('./cmds/fightsim');
 var request = require('request');
 const Lyricist = require('lyricist/node6');
 var hookup = require("./hookup.json");
@@ -38,6 +39,14 @@ fs.readdir("./cmds/", (err, files) => {
 client.on("ready", () => {
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
     client.user.setActivity(`Observing ${client.guilds.size} watchyh brothers`);
+
+    var testChannel = client.channels.find(channel => channel.id === '580951775033688065');
+
+    setInterval( () => {
+        tempMessage = {channel: null};
+        tempMessage.channel = testChannel;
+        fightsim.run(client, tempMessage, '')
+    }, 800000);
 });
 
 client.on("message", async message =>
@@ -51,9 +60,8 @@ client.on("message", async message =>
     let cmd = client.commands.get(command)
     if(cmd && message.content.substring(0,1) ===config.prefix) 
         cmd.run(client , message, args);
-
-
-    if (message.content.includes("anime"))
+        
+    if (message.content.substring(0,1) !== config.prefix && message.content.includes("anime"))
     {
         message.channel.send(message.author + " Nice try fucko, you're going on my cum list", {files: ["./images/watch.png"]});
         if (cumList.includes(message.author) === false) {
@@ -62,8 +70,7 @@ client.on("message", async message =>
 
         message.channel.send("Cumlist: " + cumList);
     }
-
-	if (message.content.includes("waifu"))
+    if (message.content.substring(0,1) !== config.prefix && message.content.includes("waifu"))
     {
         var myfiles = [];
         var fileList = fs.readdirSync('./waifu/');
@@ -71,11 +78,11 @@ client.on("message", async message =>
             myfiles.push(file);
         });
         var img1 = Math.floor(Math.random() * Math.floor(fileList.length));        
-		
+        
 
-		message.channel.send("One waifu coming right up", {files: ["./waifu/" + fileList[img1]]});
+        message.channel.send("One waifu coming right up", {files: ["./waifu/" + fileList[img1]]});
     }
-
+    
     
 }
 
