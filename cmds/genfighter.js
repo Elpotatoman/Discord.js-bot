@@ -6,10 +6,10 @@ function generateFighter(message)
 {
     var newFighter =  stats.generateFighter("message", message, null);
 
-    if(  (Math.random() <= .15 + newFighter.traitbias) && newFighter.traits.length === 0)
+    if(  stats.chanceRoll(15, newFighter.traitbias) && newFighter.traits.length === 0)
         newFighter.traits.push(stats.getTRAIT());
 
-    if(  (Math.random() <= .15 + newFighter.attributeBias) && newFighter.attributes.length === 0)
+    if(  stats.chanceRoll(15, newFighter.attributeBias) && newFighter.attributes.length === 0)
         newFighter.attributes.push(stats.getAttribute());
 
     return newFighter;

@@ -17,7 +17,7 @@ function levelCheck(fighter)
 }
 function levelBonus(fighter)
 {
-    return(Math.random() < .2 && fighter.level <= 5)
+    return(stats.chanceRoll(15, fighter.luck) && fighter.level <= 5)
 }
 function generateFighterWin(fighter,fighterOther)
 {
@@ -35,7 +35,8 @@ function generateFighterWin(fighter,fighterOther)
         traits: fighter.traits,
         attributes: fighter.attributes,
         traitbias: fighter.traitbias,
-        attributeBias: fighter.attributeBias
+        attributeBias: fighter.attributeBias,
+        luck: fighter.luck
 
     };
 
@@ -52,7 +53,7 @@ function generateFighterLose(fighter)
 }
 function addTrait(fighter)
 {
-    if(Math.random() < .15 +fighter.traitbias && fighter.traits.length < stats.getNumTraits())
+    if(stats.chanceRoll(15, fighter.traitbias) && fighter.traits.length < stats.getNumTraits())
     {
         var trait = stats.getTRAIT();
         
@@ -68,7 +69,7 @@ function addTrait(fighter)
 }
 function addAttribute(fighter)
 {
-    if(Math.random() < .33 + fighter.attributebias  && fighter.attributes.length < stats.getNumAttributes())
+    if( stats.chanceRoll(33,fighter.attributebias)  && fighter.attributes.length < stats.getNumAttributes())
     {
         var attribute = stats.getAttribute();
         
@@ -110,7 +111,7 @@ function execTraits(fighter)
             if(trait === "Timid" && fighter.exp >=20)
                 fighter.exp -= 20;
             if(trait === "Armored")
-                if(Math.random() < .5)
+                if(stats.chanceRoll(50,fighter.luck))
                     fighter.def++;
             if(trait === "Killer")
                 fighter.hp += parseInt(Math.random()*fighter.kills);
@@ -129,19 +130,19 @@ function execAttributes(fighter)
         }
         if(attribute == "Tanky")
         {
-            if(Math.random() < .5)
+            if(stats.chanceRoll(50, -1*fighter.luck))
                 fighter.str--;
             fighter.hp+=5;
         }
         if(attribute == "Gifted")
         {
-            if(Math.random() < .33)
+            if(stats.chanceRoll(33,fighter.luck))
                 fighter.str++;
             fighter.hp+=5;
         }
         if(attribute == "Slow")
         {
-            if(Math.random() < .1)
+            if(stats.chanceRoll(10,-1*fighter.luck))
             {
                 fighter.str--;
                 fighter.hp -=5;
@@ -157,7 +158,7 @@ function execAttributes(fighter)
                 let str = attribute.substring( attribute.indexOf(" ")+1);
 
                 let progNum = Number(str) +1;
-                fighter.exp += parseInt(progNum/2);
+                fighter.exp += parseInt(progNum);
                 fighter.attributes.splice(i,1,`Progression ${progNum}`);
         }
 
@@ -218,7 +219,7 @@ module.exports.run = async (bot, message, args) =>
         description: 
         `***${fighter1.name}***\n`+
         stats.fighterToString(fighter1) +
-        `vs. \n\n` +
+        `\nvs. \n\n` +
         `***${fighter2.name}***\n`+ 
         stats.fighterToString(fighter2) + 
         `Winner: **${winner}**`,

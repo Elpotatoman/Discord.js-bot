@@ -37,6 +37,10 @@ module.exports.getABIAS = () =>
 {
     return Math.round(Math.random() * 20 )/100;
 }
+module.exports.getLUCK = () =>
+{
+    return Math.round(Math.random() * 15 )/100;
+}
 module.exports.getTRAIT = () =>
 {
 
@@ -66,6 +70,10 @@ module.exports.fighterToString = (fighter) =>
     Attributes: ${fighter.attributes}
     `;
 }  
+module.exports.chanceRoll = (percent, alter) =>
+{
+    return (Math.random() < (percent/100.0 + alter) )
+}
  
 
 
@@ -85,7 +93,8 @@ module.exports.generateFighter = (type, message, fighter) =>
         traits: [],
         attributes: [],
         traitbias: stats.getTBIAS(),
-        attributeBias: stats.getABIAS()
+        attributeBias: stats.getABIAS(),
+        luck: stats.getLUCK()
     }
 
     if( type === "fighter")
