@@ -46,7 +46,7 @@ client.on("ready", () => {
         tempMessage = {channel: null};
         tempMessage.channel = testChannel;
         fightsim.run(client, tempMessage, '')
-    }, 800000);
+    }, 120000);
 });
 
 client.on("message", async message =>

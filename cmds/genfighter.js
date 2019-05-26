@@ -23,14 +23,19 @@ function generateFighter(message)
         waifu: getWaifu(),
         hp: stats.getHP(),
         str: stats.getSTR(),
+        def: stats.getDEF(),
         kills: 0,
         level: 0,
         exp: 0,
-        traits: []
+        traits: [],
+        attributes: []
             
     };
     if(Math.random() <= .15 && newFighter.traits.length === 0)
         newFighter.traits.push(stats.getTRAIT());
+
+    if(Math.random() <= .15 && newFighter.attributes.length === 0)
+        newFighter.attributes.push(stats.getAttribute());
 
     return newFighter;
 }

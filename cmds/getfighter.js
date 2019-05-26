@@ -1,4 +1,5 @@
 const fs = require("fs");
+const stats = require("./fight/fightstats")
 
 module.exports.run = async (bot, message, args) => {
     
@@ -21,13 +22,7 @@ module.exports.run = async (bot, message, args) => {
                 {
                     color: 3447003,
                     title: `${fighter.name}`,
-                    description: `
-                    ***HP:*** *__${fighter.hp}__*
-                    \n***Strength:*** *__${fighter.str}__* 
-                    \n***Kills:*** *__${fighter.kills}__*
-                    \n***LVL:*** *__${fighter.level}__* ***EXP:*** *__${fighter.exp}__*
-                    \n***Traits:*** ${fighter.traits}
-                    `,
+                    description: stats.fighterToString(fighter),
                     file: fighter.waifu
                 };
             }
