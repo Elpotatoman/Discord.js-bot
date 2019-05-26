@@ -3,18 +3,6 @@ var mergeImg = require("merge-img");
 const stats = require(`./fight/fightstats`);
 const sharp = require(`sharp`);
 
-function getWaifu()
-{
-    var myfiles = [];
-        var fileList = fs.readdirSync('./waifu/');
-        fileList.forEach(function (file) {
-            myfiles.push(file);
-        });
-        var img = Math.floor(Math.random() * Math.floor(fileList.length));
-
-        return `./waifu/${fileList[img]}`;
-}
-
 function fight(fighter1, fighter2)
 {
     if(   fighter1.hp/(fighter2.str-parseInt(Math.random()*fighter1.def))
@@ -45,27 +33,18 @@ function generateFighterWin(fighter,fighterOther)
         level: fighter.level,
         exp: fighter.exp,
         traits: fighter.traits,
-        attributes: fighter.attributes
+        attributes: fighter.attributes,
+        traitbias: fighter.traitbias,
+        attributeBias: fighter.attributeBias
 
     };
+
     return newFighterWin;
 }
 function generateFighterLose(fighter)
 {
-    var newFighterLose =
-    {
-        user: fighter.user,
-        name: fighter.name,
-        waifu: getWaifu(),
-        hp: stats.getHP(),
-        str: stats.getSTR(),
-        def: stats.getDEF(),
-        kills : 0,
-        level : 0,
-        exp: 0,
-        traits: [],
-        attributes: []
-    };
+    var newFighterLose = stats.generateFighter("fighter", null, fighter);
+
     addTrait(newFighterLose);
     addAttribute(newFighterLose);
 
@@ -73,7 +52,7 @@ function generateFighterLose(fighter)
 }
 function addTrait(fighter)
 {
-    if(Math.random() < .15  && fighter.traits.length < stats.getNumTraits())
+    if(Math.random() < .15 +fighter.traitbias && fighter.traits.length < stats.getNumTraits())
     {
         var trait = stats.getTRAIT();
         
@@ -82,11 +61,14 @@ function addTrait(fighter)
             trait = stats.getTRAIT();    
         }
         fighter.traits.push(trait);
+
+        if(!fighter.traits.includes("Killer") && fighter.kills >=5)
+            fighter.traits.push("Killer");
     }
 }
 function addAttribute(fighter)
 {
-    if(Math.random() < .33  && fighter.attributes.length < stats.getNumAttributes())
+    if(Math.random() < .33 + fighter.attributebias  && fighter.attributes.length < stats.getNumAttributes())
     {
         var attribute = stats.getAttribute();
         
@@ -130,6 +112,8 @@ function execTraits(fighter)
             if(trait === "Armored")
                 if(Math.random() < .5)
                     fighter.def++;
+            if(trait === "Killer")
+                fighter.hp += parseInt(Math.random()*fighter.kills);
             
         });
     }
@@ -208,12 +192,12 @@ module.exports.run = async (bot, message, args) =>
     
     const image1 = await sharp(fighter1.waifu)
         .resize(1500,1000, { fit: 'inside', withoutEnlargement: false })
-        .toFormat('jpeg')
+        .toFormat('png')
         .toBuffer()
         
     const image2 = await sharp(fighter2.waifu)
         .resize(1500,1000, { fit: 'inside', withoutEnlargement: false })
-        .toFormat('jpeg')
+        .toFormat('png')
         .toBuffer()
         
     
@@ -299,7 +283,7 @@ module.exports.run = async (bot, message, args) =>
         file.fighters[index2] = generateFighterLose(fighter2);
     }
 
-    var json = JSON.stringify(file); 
+    var json = JSON.stringify(file, null, '\t'); 
     fs.writeFileSync('./cmds/fight/fightIndex.json', json);
   
 

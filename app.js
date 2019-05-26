@@ -2,12 +2,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 
 const config = require("./config.json");
-const https = require('https');
 
 var fightsim = require('./cmds/fightsim');
-var request = require('request');
-const Lyricist = require('lyricist/node6');
-var hookup = require("./hookup.json");
 
 var fs = require('fs');
 var cumList = [];
