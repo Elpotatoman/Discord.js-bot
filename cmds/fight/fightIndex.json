@@ -3,122 +3,192 @@
 		{
 			"user": "<@120263305708175360>",
 			"name": "Potato",
-			"waifu": "./waifu/45849683_p10_master1200.jpg",
-			"hp": 196,
-			"str": 20,
-			"def": 6,
+			"waifu": "./waifu/__female_protagonist_persona_3_portable_and_etc_drawn_by_soejima_shigenori__3ac0e82b712710081d9dc8d488a9ab2c.jpg",
+			"hp": 158,
+			"str": 15,
+			"def": 1,
+			"kills": 1,
+			"level": 1,
+			"exp": 19,
+			"traits": [],
+			"attributes": [
+				"Progression 2"
+			],
+			"traitbias": 0,
+			"attributeBias": 0.14,
+			"luck": 0.04
+		},
+		{
+			"user": "<@120291210593042432>",
+			"name": "Mitochondria",
+			"waifu": "./waifu/tumblr_pixy910IIK1qb2euio1_1280.png",
+			"hp": 171,
+			"str": 14,
+			"def": 3,
+			"kills": 1,
+			"level": 1,
+			"exp": 12,
+			"traits": [
+				"Sickle Cell Anemia"
+			],
+			"attributes": [],
+			"traitbias": 0,
+			"attributeBias": 0.08,
+			"luck": 0.11
+		},
+		{
+			"user": "<@120008588277186560>",
+			"name": "Paprika",
+			"waifu": "./waifu/__senjougahara_hitagi_monogatari_series_and_etc__9cf614fc9e4740af7bd47449da2fa864.png",
+			"hp": 140,
+			"str": 11,
+			"def": 2,
 			"kills": 0,
 			"level": 0,
 			"exp": 0,
 			"traits": [
 				"Prodigal Son"
 			],
-			"attributes": [
-				"Tanky"
-			],
-			"traitbias": 0.03,
-			"attributeBias": 0.06,
-			"luck": 0.14
-		},
-		{
-			"user": "<@120291210593042432>",
-			"name": "Mitochondria",
-			"waifu": "./waifu/51336626_p10.jpg",
-			"hp": 129,
-			"str": 20,
-			"def": 9,
-			"kills": 0,
-			"level": 0,
-			"exp": 0,
-			"traits": [],
-			"attributes": [
-				"Glass Cannon"
-			],
-			"traitbias": 0.06,
-			"attributeBias": 0.12,
-			"luck": 0.12
-		},
-		{
-			"user": "<@120008588277186560>",
-			"name": "Paprika",
-			"waifu": "./waifu/__onodera_kosaki_nisekoi_drawn_by_podri__287a0c080c1b828920f72a14720e3d68.png",
-			"hp": 120,
-			"str": 20,
-			"def": 5,
-			"kills": 0,
-			"level": 0,
-			"exp": 0,
-			"traits": [],
-			"attributes": [
-				"Wildcard"
-			],
-			"traitbias": 0.01,
-			"attributeBias": 0.06,
-			"luck": 0.11
+			"attributes": [],
+			"traitbias": 0.11,
+			"attributeBias": 0.17,
+			"luck": 0.03
 		},
 		{
 			"user": "<@187027295070978049>",
 			"name": "McJanglesworth",
-			"waifu": "./waifu/__tadokoro_megumi_and_yukihira_souma_shokugeki_no_souma_drawn_by_el_zheng__bb377a366c78ca175183e7f1caa6cd59.jpg",
-			"hp": 164,
-			"str": 16,
-			"def": 2,
-			"kills": 0,
-			"level": 0,
-			"exp": 0,
-			"traits": [],
-			"attributes": [],
-			"traitbias": 0.09,
-			"attributeBias": 0.15,
+			"waifu": "./waifu/tumblr_nz4gi64uex1tpc25mo1_1280.jpg",
+			"hp": 216,
+			"str": 21,
+			"def": 6,
+			"kills": 1,
+			"level": 1,
+			"exp": 28,
+			"traits": [
+				"Prodigal Son"
+			],
+			"attributes": [
+				"Gifted"
+			],
+			"traitbias": 0.03,
+			"attributeBias": 0.13,
 			"luck": 0.1
 		},
 		{
 			"user": "<@123306473584328704>",
 			"name": "Ram",
-			"waifu": "./waifu/__kujikawa_rise_persona_4_and_etc_drawn_by_chanchan__sample-d2320893eb6f06da8ba48c946556f9cc.jpg",
-			"hp": 167,
-			"str": 11,
-			"def": 3,
-			"kills": 0,
-			"level": 0,
-			"exp": 0,
-			"traits": [],
-			"attributes": [],
-			"traitbias": 0.05,
-			"attributeBias": 0.02,
-			"luck": 0.03
+			"waifu": "./waifu/__onodera_kosaki_nisekoi_drawn_by_qosic__64f883c7f4ddd4e7dc190eb07c807237.jpg",
+			"hp": 126,
+			"str": 17,
+			"def": 5,
+			"kills": 3,
+			"level": 3,
+			"exp": 52,
+			"traits": [
+				"Sickle Cell Anemia",
+				"Healthy",
+				"Underdog"
+			],
+			"attributes": [
+				"Tanky"
+			],
+			"traitbias": 0.09,
+			"attributeBias": 0.08,
+			"luck": 0.15
 		},
 		{
 			"user": "<@163455609985957890>",
 			"name": "RakuSakuRobotu",
-			"waifu": "./waifu/D7GNnkSU8AIGB4q.png",
-			"hp": 131,
-			"str": 16,
-			"def": 4,
+			"waifu": "./waifu/D7_A6B8U0AAQzF2.jpg",
+			"hp": 137,
+			"str": 13,
+			"def": 1,
 			"kills": 0,
 			"level": 0,
 			"exp": 0,
-			"traits": [],
-			"attributes": [],
-			"traitbias": 0.01,
-			"attributeBias": 0.18,
-			"luck": 0.14
+			"traits": [
+				"Healthy"
+			],
+			"attributes": [
+				"Multi-faceted"
+			],
+			"traitbias": 0.11,
+			"attributeBias": 0.01,
+			"luck": 0.05
 		},
 		{
 			"user": "<@161628413357064203>",
 			"name": "Breaded Steak",
-			"waifu": "./waifu/tumblr_nz4gi64uex1tpc25mo1_1280.jpg",
-			"hp": 107,
-			"str": 15,
+			"waifu": "./waifu/8bylwpturjv01.png",
+			"hp": 106,
+			"str": 18,
 			"def": 3,
 			"kills": 0,
 			"level": 0,
 			"exp": 0,
+			"traits": [
+				"Injured"
+			],
+			"attributes": [],
+			"traitbias": 0.05,
+			"attributeBias": 0,
+			"luck": 0.05
+		},
+		{
+			"user": "<@167200084012957696>",
+			"name": "Visible Forklift",
+			"waifu": "./waifu/xjKxXaHvxusNZPiLojpGUrEjfotv3am5K6SBZgbcAmU.jpg",
+			"hp": 101,
+			"str": 33,
+			"def": 8,
+			"kills": 19,
+			"level": 13,
+			"exp": 323,
+			"traits": [
+				"Armored",
+				"Killer",
+				"Suicidal"
+			],
+			"attributes": [],
+			"traitbias": 0.11,
+			"attributeBias": 0.19,
+			"luck": 0.13
+		},
+		{
+			"user": "<@120263232081362946>",
+			"name": "RNA",
+			"waifu": "./waifu/63295888_p4_master1200.jpg",
+			"hp": 167,
+			"str": 19,
+			"def": 4,
+			"kills": 4,
+			"level": 3,
+			"exp": 54,
+			"traits": [
+				"Suicidal"
+			],
+			"attributes": [
+				"Slow"
+			],
+			"traitbias": 0.03,
+			"attributeBias": 0.17,
+			"luck": 0.09
+		},
+		{
+			"user": "<@120382912578322443>",
+			"name": "ryfryle",
+			"waifu": "./waifu/__tadokoro_megumi_and_yukihira_souma_shokugeki_no_souma_drawn_by_el_zheng__bb377a366c78ca175183e7f1caa6cd59.jpg",
+			"hp": 214,
+			"str": 24,
+			"def": 3,
+			"kills": 8,
+			"level": 5,
+			"exp": 109,
 			"traits": [],
 			"attributes": [],
-			"traitbias": 0.06,
-			"attributeBias": 0.07,
-			"luck": 0.02
+			"traitbias": 0.01,
+			"attributeBias": 0.06,
+			"luck": 0.05
 		}
 	],
 	"users": [
@@ -128,6 +198,9 @@
 		"<@187027295070978049>",
 		"<@123306473584328704>",
 		"<@163455609985957890>",
-		"<@161628413357064203>"
+		"<@161628413357064203>",
+		"<@167200084012957696>",
+		"<@120263232081362946>",
+		"<@120382912578322443>"
 	]
 }

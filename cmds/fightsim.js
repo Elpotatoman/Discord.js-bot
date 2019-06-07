@@ -2,6 +2,8 @@ const fs = require("fs");
 var mergeImg = require("merge-img");
 const stats = require(`./fight/fightstats`);
 const sharp = require(`sharp`);
+const Quote = require('inspirational-quotes');
+
 
 function fight(fighter1, fighter2)
 {
@@ -13,7 +15,7 @@ function fight(fighter1, fighter2)
 }
 function levelCheck(fighter)
 {
-    return (fighter.exp >= fighter.level*30)
+    return (fighter.exp >= fighter.level*25)
 }
 function levelBonus(fighter)
 {
@@ -26,7 +28,7 @@ function generateFighterWin(fighter,fighterOther)
         user: fighter.user,
         name: fighter.name,
         waifu: fighter.waifu,
-        hp: fighter.hp - parseInt(Math.random()*(fighterOther.str*1.5-fighter.def)),
+        hp: fighter.hp - parseInt(Math.random()*(fighterOther.str-fighter.def)),
         str: fighter.str,
         def: fighter.def,
         kills: fighter.kills + 1,
@@ -53,6 +55,11 @@ function generateFighterLose(fighter)
 }
 function addTrait(fighter)
 {
+    var kills = fighter.kills;
+    if( !fighter.traits.includes("Maimed") && stats.chanceRoll(kills, -fighter.luck)   )
+    {
+        fighter.traits.push("Maimed");
+    }
     if(stats.chanceRoll(15, fighter.traitbias) && fighter.traits.length < stats.getNumTraits())
     {
         var trait = stats.getTRAIT();
@@ -63,13 +70,17 @@ function addTrait(fighter)
         }
         fighter.traits.push(trait);
 
-        if(!fighter.traits.includes("Killer") && fighter.kills >=5)
+        if(!fighter.traits.includes("Killer") && fighter.kills >=5 && stats.chanceRoll(50,fighter.luck))
             fighter.traits.push("Killer");
+        if( (!fighter.traits.includes("Underdog") && fighter.kills < 3) && stats.chanceRoll(25,fighter.luck))
+            fighter.traits.push("Underdog");
+        
     }
+    
 }
 function addAttribute(fighter)
 {
-    if( stats.chanceRoll(33,fighter.attributebias)  && fighter.attributes.length < stats.getNumAttributes())
+    if( stats.chanceRoll(33,fighter.attributeBias)  && fighter.attributes.length < stats.getNumAttributes())
     {
         var attribute = stats.getAttribute();
         
@@ -105,17 +116,24 @@ function execTraits(fighter)
                 
             }
             if(trait === 'Healthy')
-                fighter.hp += 5;
+                fighter.hp += 2;
             if(trait === "Sickle Cell Anemia")
                 fighter.hp -= 2;
             if(trait === "Timid" && fighter.exp >=20)
-                fighter.exp -= 20;
+            {
+                if(stats.chanceRoll(25, 0))
+                    fighter.str--;
+            }
             if(trait === "Armored")
-                if(stats.chanceRoll(50,fighter.luck))
+                if(stats.chanceRoll(5,fighter.luck))
                     fighter.def++;
             if(trait === "Killer")
-                fighter.hp += parseInt(Math.random()*fighter.kills);
-            
+                fighter.hp += parseInt(Math.random()*fighter.level);
+            if(trait === "Maimed")
+                if(fighter.str > 10)
+                    fighter.str-=10;
+            if(trait === "Underdog" && fighter.kills < 5)
+                fighter.str++;
         });
     }
 }
@@ -152,6 +170,11 @@ function execAttributes(fighter)
         {
             fighter.hp = parseInt(Math.random()*600 +1);
             fighter.str = parseInt(Math.random()*60 +1);
+            if(fighter.kills > 4)
+            {
+                fighter.hp+=50;
+                fighter.str+=5;
+            }
         }
         if(attribute.indexOf("Progression ") >= 0 )
         {
@@ -160,6 +183,11 @@ function execAttributes(fighter)
                 let progNum = Number(str) +1;
                 fighter.exp += parseInt(progNum);
                 fighter.attributes.splice(i,1,`Progression ${progNum}`);
+        }
+        if(attribute === "Multi-faceted")
+        {
+            if(stats.chanceRoll(fighter.attributeBias, fighter.luck))
+                addAttribute(fighter);
         }
 
     });
@@ -202,7 +230,18 @@ module.exports.run = async (bot, message, args) =>
         .toBuffer()
         
     
-    
+    if(stats.chanceRoll(10, fighter1.luck))
+    {
+        execTraits(fighter1);
+        execAttributes(fighter1);
+    }
+
+    if(stats.chanceRoll(10, fighter2.luck))
+    {
+        execTraits(fighter2);
+        execAttributes(fighter2);
+    }
+
     var result = fight(fighter1, fighter2);
     var winner="";
 
@@ -222,7 +261,8 @@ module.exports.run = async (bot, message, args) =>
         `\nvs. \n\n` +
         `***${fighter2.name}***\n`+ 
         stats.fighterToString(fighter2) + 
-        `Winner: **${winner}**`,
+        `\nWinner: **${winner}**
+        ${Quote.getRandomQuote()}`,
 
         file: './output/fight/outFight.png'
         

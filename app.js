@@ -34,7 +34,7 @@ fs.readdir("./cmds/", (err, files) => {
 
 client.on("ready", () => {
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
-    client.user.setActivity(`Observing ${client.guilds.size} watchyh brothers`);
+    client.user.setActivity(`Observing ${client.users.size} bitches`);
 
     var testChannel = client.channels.find(channel => channel.id === '580951775033688065');
 

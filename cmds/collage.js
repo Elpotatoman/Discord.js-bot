@@ -1,70 +1,46 @@
-const fs = require('fs');
-const mergeImg = require('merge-img');
-const sharp = require("sharp");
-const path = require("path");
+const collage = require("@settlin/collage")
+const fs = require("fs");
 
-function removeFiles(directory)
+module.exports.run = async (bot, message, args) => 
 {
-    fs.readdir(directory, (err, files) => {
-        if (err) throw err;
-      
-        for (const file of files) {
-          fs.unlink(path.join(directory, file), err => {
-            if (err) throw err;
-          });
-        }
-      });
-}
 
-module.exports.run = async (bot, message, args) => {
-    var imgEdit = [`./output/collage2/out0.jpeg`, `./output/collage2/out1.jpeg`, 
-                    `./output/collage2/out2.jpeg`,`./output/collage2/out3.jpeg`, 
-                    `./output/collage2/out4.jpeg`, `./output/collage2/out5.jpeg`,
-                    `./output/collage2/out6.jpeg`, `./output/collage2/out7.jpeg` ];
-
-    var myfiles = [];
+    var list = [];
     var fileList = fs.readdirSync('./waifu/');
     fileList.forEach(function (file) {
-        myfiles.push(file);
+        list.push(file);
     });
-    var imgList = [];
+    var myfiles = [];
 
-    for(i = 0; i < 8; i++)
+    for(i = 0; i < 9; i++)
     {
-        var num = Math.floor(Math.random() * Math.floor(fileList.length));
-        var tempImg = "./waifu/" + fileList[num].toString();
-        imgList.push(tempImg);
+      myfiles.push( `./waifu/${list[parseInt(Math.random()*list.length)].toString()}`);
     }
-    
 
-    let promise  = await imgList.forEach( (image, i) => {
 
-        sharp(image)
-            .resize(800,600, { fit: 'inside', withoutEnlargement: true })
-            .toFormat('jpeg')
-            .toBuffer()
-            .then( data => {
-                fs.writeFileSync(`./output/collage2/out${i}.jpeg`, data);
-            })
-            .catch( err => {
-                console.log(err);
-            });
+    const options = {
+    sources: myfiles,
+    width: 3, // number of images per row
+    height: 3, // number of images per column
+    imageWidth: 1000, // width of each image
+    imageHeight: 1000, // height of each image
+    backgroundColor: "#cccccc", // optional, defaults to #eeeeee.
+    spacing: 2, // optional: pixels between each image
+    lines: [
+    ],
+    //text: "Sometimes we want to find out when a single one time event has finished. For example - a stream is done. For this we can use new Promise. Note that this option should be considered only if automatic conversion isn't possible.Note that promises model a single value through time, they only resolve once - so while they're a good fit for a single event, they are not recommended for multiple event APIs."
+    //textStyle: {color: "#fff", fontSize: 20, font: "Arial", height: 300}
+    // we can use either lines or text
+    };
+
+    collage(options)
+    .then((canvas) => {
+      const src = canvas.jpegStream();
+      message.channel.send({files: [canvas.toBuffer()]});
+
     });
-
-    let result = await promise;
-    
-    mergeImg(imgEdit, 'center')
-  .then((img) => {    
-    img.write('./output/outCollageReborn.jpeg', () => message.channel.send("CollageReborn", {files: ['./output/outCollageReborn.jpeg']} ));
-    
-  });
-
-
-
-
 }
 
 module.exports.help = {
     name: "collage",
-    description: "Collage reborn."
+    description: "College recoded."
 }

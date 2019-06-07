@@ -3,8 +3,8 @@ const stats = require(`./fightstats`);
 const fs = require("fs");
 
 const traitList = ["Regen","Vampire","Prodigal Son","Suicidal", "Injured", "Healthy", "Sickle Cell Anemia", "Timid", "Armored"];
-const attributeList = ["Glass Cannon", "Tanky", "Gifted", "Slow", "Wildcard", "Progression "];
-const traitsHidden = ["Killer"]
+const attributeList = ["Glass Cannon", "Tanky", "Gifted", "Slow", "Wildcard", "Progression ", "Multi-faceted"];
+const traitsHidden = ["Killer", "Underdog", "Maimed"]
 
 module.exports.getHP = () =>
 {
@@ -27,11 +27,11 @@ module.exports.getWaifu = () =>
 }
 module.exports.getDEF = () =>
 {
-    return parseInt(1 + Math.random()*10);
+    return parseInt(1 + Math.random()*6);
 }
 module.exports.getTBIAS = () =>
 {
-    return Math.round(Math.random() * 10)/100;
+    return Math.round(Math.random() * 20)/100;
 }
 module.exports.getABIAS = () =>
 {
@@ -72,7 +72,7 @@ module.exports.fighterToString = (fighter) =>
 }  
 module.exports.chanceRoll = (percent, alter) =>
 {
-    return (Math.random() < (percent/100.0 + alter) )
+    return (Math.random() < (percent/100.0 + alter) );
 }
  
 
